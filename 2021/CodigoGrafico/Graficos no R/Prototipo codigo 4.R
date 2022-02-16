@@ -59,14 +59,14 @@ get_pergunta_graph <- function(pergunta) {
   #b              prof              x
 
 
-  names(df.m)[names(df.m) == 'value'] <- 'Média'
+  names(df.m)[names(df.m) == 'value'] <- 'Media'
   names(df.m)[names(df.m) == 'variable'] <- 'Grupos'
 
 
-  ggplot(df.m, aes(x = Perguntas, y = Média, fill = Grupos )) +
+  return(ggplot(df.m, aes(x = Perguntas, y = Media, fill = Grupos )) +
     geom_bar(position = position_dodge(0.7), stat="identity",width = 0.7) +
-    geom_text(aes(label=Média), position=position_dodge(width=0.7), vjust = -0.2) +
-    ggtitle(pergunta)
+    geom_text(aes(label=Media), position=position_dodge(width=0.7), vjust = -0.2) +
+    ggtitle(pergunta))
 }
 
 perguntas <- c(
@@ -74,10 +74,15 @@ perguntas <- c(
   '2. Com relação à compatibilidade do acervo da biblioteca com as exigências do curso:'
 )
 for(pergunta in perguntas) {
-  ggsave(
-    file=sprintf('%s.svg', pergunta),
-    plot=get_pergunta_graph(pergunta),
-    width=10,
-    height=6
-  )
+  # ggsave(
+  #   file=sprintf('%s.svg', pergunta),
+  #   plot=get_pergunta_graph(pergunta),
+  #   width=10,
+  #   height=6
+  # )
+  #get_pergunta_graph(pergunta)
+  #ggsave(sprintf('%s.png', pergunta))
+  svg(filename =sprintf('%s.svg', pergunta))
+  print(get_pergunta_graph(pergunta))
+  dev.off()
 }
