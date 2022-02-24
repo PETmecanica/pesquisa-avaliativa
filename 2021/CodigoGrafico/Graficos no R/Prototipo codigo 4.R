@@ -66,12 +66,13 @@ get_pergunta_graph <- function(pergunta) {
   return(ggplot(df.m, aes(x = Perguntas, y = Media, fill = Grupos )) +
     geom_bar(position = position_dodge(0.7), stat="identity",width = 0.7) +
     geom_text(aes(label=Media), position=position_dodge(width=0.7), vjust = -0.2) +
-    ggtitle(pergunta))
+    ggtitle(paste(pergunta,':')) + theme(axis.text.x = element_text(size=12))
+    )
 }
 
 perguntas <- c(
-  '1. Com relação à presença de ambientes físicos de estudo satisfatórios fora de aula:',
-  '2. Com relação à compatibilidade do acervo da biblioteca com as exigências do curso:'
+  '1. Com relação à presença de ambientes físicos de estudo satisfatórios fora de aula',
+  '2. Com relação à compatibilidade do acervo da biblioteca com as exigências do curso'
 )
 for(pergunta in perguntas) {
   # ggsave(
@@ -80,9 +81,9 @@ for(pergunta in perguntas) {
   #   width=10,
   #   height=6
   # )
-  #get_pergunta_graph(pergunta)
-  #ggsave(sprintf('%s.png', pergunta))
-  svg(filename =sprintf('%s.svg', pergunta))
-  print(get_pergunta_graph(pergunta))
-  dev.off()
+  get_pergunta_graph(pergunta)
+  ggsave(paste(pergunta,'.svg'),device = svg,width=10, height=6)
+  #svg(filename =sprintf('%s.svg', pergunta))
+  #print(get_pergunta_graph(pergunta))
+  #dev.off()
 }
