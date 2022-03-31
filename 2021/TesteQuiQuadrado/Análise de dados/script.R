@@ -199,8 +199,12 @@ get_corr <- function(perfil_txt, pergunta) {
   get_correlacao_grupo <- function(df, pergunta) {
     perfil <- colnames(df)[startsWith(colnames(df), perfil_txt)]
     colunas <- colnames(df)[startsWith(colnames(df), pergunta)]
-    correlacao1 <- as.data.frame(df[, colunas[1]]) %>% sapply(function(x) { r(perfil[1], as.numeric(x)) })
-    correlacao2 <- as.data.frame(df[, colunas[2]]) %>% sapply(function(x) { r(perfil[2], as.numeric(x)) })
+    perfil1 <- as.data.frame(df[, perfil[1]])
+    col1 <- as.data.frame(df[, colunas[1]])
+    correlacao1 <- r(as.numeric(perfil1), as.numeric(col1))
+    perfil2 <- as.data.frame(df[, perfil[2]])
+    col2 <- as.data.frame(df[, colunas[2]])
+    correlacao2 <- r(as.numeric(perfil2), as.numeric(col2))    
     if (df==arquivo(planilhas[1])) {
       c(correlacao1)
     } else {
