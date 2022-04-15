@@ -196,25 +196,25 @@ for (pergunta in perguntas_ae) {
 }
 
 get_corr <- function(perfil_txt, pergunta) {
-  get_correlacao_grupo <- function(df, pergunta) {
+  get_correlacao_grupo <- function(df, pergunta, titulo_arq) {
     perfil <- colnames(df)[startsWith(colnames(df), perfil_txt)]
     colunas <- colnames(df)[startsWith(colnames(df), pergunta)]
     perfil1 <- as.data.frame(df[, perfil[1]])
     col1 <- as.data.frame(df[, colunas[1]])
-    correlacao1 <- r(as.numeric(perfil1), as.numeric(col1))
+    correlacao1 <- r(perfil1[, "df[, perfil[1]]"], col1[, "df[, colunas[1]]"])
     perfil2 <- as.data.frame(df[, perfil[2]])
     col2 <- as.data.frame(df[, colunas[2]])
-    correlacao2 <- r(as.numeric(perfil2), as.numeric(col2))    
-    if (df==arquivo(planilhas[1])) {
+    correlacao2 <- r(perfil2[, "df[, perfil[2]]"], col2[, "df[, colunas[2]]"])
+    if (titulo_arq == 'Bixo') {
       c(correlacao1)
     } else {
       c(correlacao1,correlacao2)
     }
   }
   c(
-    get_correlacao_grupo(arquivo(planilhas[1]), pergunta),
-    get_correlacao_grupo(arquivo(planilhas[2]), pergunta),
-    get_correlacao_grupo(arquivo(planilhas[3]), pergunta)
+    get_correlacao_grupo(arquivo(planilhas[1]), pergunta, 'Bixo'),
+    get_correlacao_grupo(arquivo(planilhas[2]), pergunta, 'Vet'),
+    get_correlacao_grupo(arquivo(planilhas[3]), pergunta, 'Prof')
   )
 }
 
